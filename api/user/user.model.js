@@ -1,3 +1,5 @@
+import { available } from "./user.controller";
+
 // 아래는 향후, 몽고DB로 바꿀것임 (꼭 잊지말고)
 const Store = [
     {
@@ -5,6 +7,8 @@ const Store = [
       role: 'user',
       email: 'yujaesuk@gmail.com',
       password: '1234',
+      availability: 0,
+
     },
     {
       name: '강호동',
@@ -39,5 +43,13 @@ const Store = [
       driver.position.longitude = longitude;
       return driver;
     },
-  };
-  
+    unavailable: async (email) => {
+      const driver = Store.find((s) => s.email === email);
+      driver.availablity = 0;
+      return driver;
+  },
+    getDriver: async ({latitude, longitude}) => {
+      const driver = Store.filter((s) => s.availablity == 1 && s.role == "driver");
+     return drivers
+  },
+};

@@ -35,10 +35,19 @@ export function login(req, res, next) {
 }
 
 export function available(req, res) {
-  const { email, latitude, longitude } = req.body || {};
+  console.log(req.body.email);
   return User.available(email, { latitude, longitude })
     .then((user) => {
       return '야휴 이제, 손님좀 받아보자';
     })
     .then(responseWithResult(res));
 }
+
+
+export function unavailable(req, res) {
+  return User.available(email)
+    .then((user) => {
+      return '저 이제 손님 못받아유...';
+    })
+    .then(responseWithResult(res)); 
+  }
