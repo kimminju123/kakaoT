@@ -1,4 +1,4 @@
-import { available } from "./user.controller";
+import { getDistance1, getDistance2 } from "./user.controller";
 
 // 아래는 향후, 몽고DB로 바꿀것임 (꼭 잊지말고)
 const Store = [
@@ -19,6 +19,17 @@ const Store = [
       position: {
         latitude: 17.38,
         longitude: 78.48,
+      },
+    },
+    {
+      name: '서울택시',
+      role: 'driver',
+      email: 'seoul@kakao.com',
+      password: '1234',
+      availablity: 1,
+      position: {
+        latitude: 37.5665,
+        longitude: 126.9780,
       },
     },
   ];
@@ -49,7 +60,18 @@ const Store = [
       return driver;
   },
     getDriver: async ({latitude, longitude}) => {
-      const driver = Store.filter((s) => s.availablity == 1 && s.role == "driver");
-     return drivers
+      const driver = Store.filter((s) => s.availablity == 1 && s.role == "driver")
+      return drivers.find((driver)=>{
+        const{
+          position:(latitude, longitude)
+        } = driver;
+        console.log(
+          `택시기사의 위도값: ${latitude}, 경도값:${longitude}`
+        )
+        const dist1 = getDistance1(latitude, longitude, lat, lon);
+        console.log(`택시기사와 나와의 거리: ${dist1}`);
+        if (dist1 <= 5) return true //나와 5km이내 거리에 있어야 합격
+        //나와의 거리를 구하자
+      })
   },
 };
